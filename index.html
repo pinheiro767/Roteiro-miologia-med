@@ -1,40 +1,402 @@
-const MUSCULOS = {
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Miologia - Anatomia Humana</title>
 
-generalidades:[
-"Ventre muscular",
-"Tendão muscular",
-"Aponeurose",
-"Fáscia muscular",
-"Septo intermuscular",
-"Músculo de fibra paralela",
-"Músculo de fibras oblíquas",
-"Músculo semipeniforme",
-"Músculo peniforme",
-"Músculo multipeniforme",
-"Músculo convergente",
-"Músculo circular",
-"Músculo curto",
-"Músculo longo",
-"Músculo plano",
-"Músculo superficial",
-"Músculo profundo",
-"Músculo fusiforme",
-"Músculo bíceps",
-"Músculo tríceps",
-"Músculo quadríceps",
-"Músculo bicaudado",
-"Músculo policaudado",
-"Músculo biventre",
-"Músculo poliventre"
-],
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="libs/jspdf.min.js"></script>
+</head>
+<body>
 
-dorso:[
-"Trapézio - Parte descendente",
-"Trapézio - Parte transversa",
-"Trapézio - Parte ascendente",
-"Latíssimo do dorso",
-"Aponeurose toracolombar",
-"Levantador da escápula",
+<header>
+  <h1>ANATOMIA HUMANA — MIOLOGIA</h1>
+  <h3>Profª Drª Carmem Patrícia Barbosa</h3>
+  <button id="installBtn">Baixar App</button>
+</header>
+
+<section class="install-info">
+  <h2>Como instalar o aplicativo</h2>
+
+  <p><b>Android</b><br>
+  1. Abra no Chrome<br>
+  2. Clique em "Adicionar à tela inicial"</p>
+
+  <p><b>iPhone</b><br>
+  1. Abra no Safari<br>
+  2. Clique no botão compartilhar<br>
+  3. Escolha "Adicionar à Tela de Início"</p>
+</section>
+
+<nav class="tabs">
+  <button onclick="openTab('generalidades')">Generalidades</button>
+  <button onclick="openTab('dorso')">Músculos do Dorso</button>
+  <button onclick="openTab('torax')">Músculos do Tórax</button>
+  <button onclick="openTab('abdome')">Músculos do Abdome</button>
+  <button onclick="openTab('membroSuperior')">Membro Superior</button>
+  <button onclick="openTab('membroInferior')">Membro Inferior</button>
+  <button onclick="openTab('modelo3d')">Criar Material 3D</button>
+</nav>
+
+<button class="pdfBtn" onclick="gerarPDF()">Gerar PDF completo</button>
+
+<!-- GENERALIDADES -->
+<div id="generalidades" class="tab">
+  <h2>Generalidades</h2>
+  <ol>
+    <li>Ventre muscular</li>
+    <li>Tendão muscular</li>
+    <li>Aponeurose</li>
+    <li>Fáscia muscular</li>
+    <li>Septo intermuscular</li>
+    <li>Músculo de fibra paralela (ex.: m. sartório)</li>
+    <li>Músculo de fibras oblíquas (ex.: m. oblíquo externo do abdome)</li>
+    <li>Músculo semipeniforme (ex.: m. extensor longo dos dedos)</li>
+    <li>Músculo peniforme (ex.: m. reto femoral)</li>
+    <li>Músculo multipeniforme (ex.: m. deltoide)</li>
+    <li>Músculo convergente ou triangular (ex.: m. peitoral maior)</li>
+    <li>Músculo circular ou esfincteriano (ex.: m. orbicular do olho)</li>
+    <li>Músculo curto (ex.: m. pronador quadrado)</li>
+    <li>Músculo longo (ex.: m. sartório)</li>
+    <li>Músculo plano (ex.: m. oblíquo externo do abdome)</li>
+    <li>Músculo superficial (ex.: m. trapézio)</li>
+    <li>Músculo profundo (ex.: m. transverso do abdome)</li>
+    <li>Músculo fusiforme (ex.: m. tibial anterior)</li>
+    <li>Músculo bíceps (ex.: m. bíceps braquial, m. bíceps femoral)</li>
+    <li>Músculo tríceps (ex.: m. tríceps braquial, m. tríceps sural)</li>
+    <li>Músculo quadríceps (ex.: m. quadríceps femoral)</li>
+    <li>Músculo bicaudado (ex.: m. flexor curto do hálux)</li>
+    <li>Músculo policaudado (ex.: m. extensor dos dedos)</li>
+    <li>Músculo biventre (ex.: m. digástrico)</li>
+    <li>Músculo poliventre (ex.: m. reto do abdome)</li>
+  </ol>
+
+  <div class="upload">
+    <button onclick="tirarFoto('generalidades')">Tirar foto</button>
+    <input type="file" accept="image/*" multiple onchange="importarArquivo(event,'generalidades')">
+    <div id="galeria-generalidades"></div>
+  </div>
+</div>
+
+<!-- DORSO -->
+<div id="dorso" class="tab" style="display:none;">
+  <h2>Músculos do Dorso</h2>
+
+  <h3>Extrínsecos superficiais (toracoapendiculares)</h3>
+  <ol>
+    <li>Trapézio - Parte descendente</li>
+    <li>Trapézio - Parte transversa</li>
+    <li>Trapézio - Parte ascendente</li>
+    <li>Latíssimo do dorso</li>
+    <li>Aponeurose toracolombar</li>
+    <li>Levantador da escápula</li>
+    <li>Romboide maior</li>
+    <li>Romboide menor</li>
+  </ol>
+
+  <h3>Extrínsecos intermediários</h3>
+  <ol>
+    <li>Serrátil posterior superior</li>
+    <li>Serrátil posterior inferior</li>
+  </ol>
+
+  <h3>Intrínsecos (profundos ou próprios do dorso) — Camada intermediária</h3>
+  <ol>
+    <li>Eretor da espinha</li>
+    <li>Espinal do tórax</li>
+    <li>Longuíssimo do tórax</li>
+    <li>Íliocostal do lombo</li>
+    <li>Aponeurose do m. eretor da espinha</li>
+  </ol>
+
+  <h3>Camada profunda (transversoespinais)</h3>
+  <ol>
+    <li>Semiespinal do tórax</li>
+    <li>Multífidos do tórax</li>
+    <li>Multífidos do lombo</li>
+    <li>Rotadores do tórax</li>
+    <li>Rotadores do lombo</li>
+    <li>Intertransversários do lombo</li>
+    <li>Interespinais do tórax</li>
+    <li>Interespinais do lombo</li>
+    <li>Levantadores das costelas</li>
+  </ol>
+
+  <div class="upload">
+    <button onclick="tirarFoto('dorso')">Tirar foto</button>
+    <input type="file" accept="image/*" multiple onchange="importarArquivo(event,'dorso')">
+    <div id="galeria-dorso"></div>
+  </div>
+</div>
+
+<!-- TÓRAX -->
+<div id="torax" class="tab" style="display:none;">
+  <h2>Músculos do Tórax</h2>
+
+  <h3>Toracoapendiculares</h3>
+  <ol>
+    <li>Peitoral maior - Parte clavicular</li>
+    <li>Peitoral maior - Parte esternocostal</li>
+    <li>Peitoral maior - Parte abdominal</li>
+    <li>Peitoral menor</li>
+    <li>Subclávio</li>
+    <li>Serrátil anterior</li>
+  </ol>
+
+  <h3>Músculos verdadeiros do tórax</h3>
+  <ol>
+    <li>Serrátil posterior superior</li>
+    <li>Serrátil posterior inferior</li>
+    <li>Levantadores das costelas</li>
+    <li>Intercostais externos</li>
+    <li>Intercostais internos</li>
+    <li>Membrana intercostal interna</li>
+    <li>Membrana intercostal externa</li>
+    <li>Transverso do tórax</li>
+    <li>Subcostais</li>
+    <li>Diafragma</li>
+  </ol>
+
+  <div class="upload">
+    <button onclick="tirarFoto('torax')">Tirar foto</button>
+    <input type="file" accept="image/*" multiple onchange="importarArquivo(event,'torax')">
+    <div id="galeria-torax"></div>
+  </div>
+</div>
+
+<!-- ABDOME -->
+<div id="abdome" class="tab" style="display:none;">
+  <h2>Músculos do Abdome</h2>
+
+  <ol>
+    <li>Reto do abdome</li>
+    <li>Lâmina anterior da bainha do músculo reto do abdome</li>
+    <li>Lâmina posterior da bainha do músculo reto do abdome</li>
+    <li>Intersecções tendíneas do músculo reto do abdome</li>
+    <li>Oblíquo externo do abdome</li>
+    <li>Oblíquo interno do abdome</li>
+    <li>Linha alba</li>
+    <li>Transverso do abdome</li>
+    <li>Quadrado do lombo</li>
+  </ol>
+
+  <div class="upload">
+    <button onclick="tirarFoto('abdome')">Tirar foto</button>
+    <input type="file" accept="image/*" multiple onchange="importarArquivo(event,'abdome')">
+    <div id="galeria-abdome"></div>
+  </div>
+</div>
+
+<!-- MEMBRO SUPERIOR -->
+<div id="membroSuperior" class="tab" style="display:none;">
+  <h2>Músculos do Membro Superior</h2>
+
+  <h3>Escapuloumerais (intrínsecos do ombro)</h3>
+  <ol>
+    <li>Deltoide - Parte clavicular</li>
+    <li>Deltoide - Parte acromial</li>
+    <li>Deltoide - Parte espinal</li>
+    <li>Supra-espinal</li>
+    <li>Fáscia supra-espinal</li>
+    <li>Infra-espinal</li>
+    <li>Fáscia infra-espinal</li>
+    <li>Redondo menor</li>
+    <li>Fáscia do m. redondo menor</li>
+    <li>Redondo maior</li>
+    <li>Fáscia do m. redondo maior</li>
+    <li>Subescapular</li>
+    <li>Fáscia subescapular</li>
+  </ol>
+
+  <h3>Músculos do braço</h3>
+  <ol>
+    <li>Coracobraquial</li>
+    <li>Bíceps braquial - Cabeça curta</li>
+    <li>Bíceps braquial - Cabeça longa</li>
+    <li>Aponeurose do m. bíceps braquial</li>
+    <li>Braquial</li>
+    <li>Tríceps braquial - Cabeça longa</li>
+    <li>Tríceps braquial - Cabeça curta</li>
+    <li>Tríceps braquial - Cabeça medial</li>
+    <li>Ancôneo</li>
+  </ol>
+
+  <h3>Músculos do antebraço</h3>
+  <ol>
+    <li>Pronador redondo</li>
+    <li>Pronador quadrado</li>
+    <li>Supinador</li>
+    <li>Palmar longo</li>
+    <li>Flexor radial do carpo</li>
+    <li>Flexor ulnar do carpo</li>
+    <li>Flexor superficial dos dedos</li>
+    <li>Flexor profundo dos dedos</li>
+    <li>Flexor longo do polegar</li>
+    <li>Braquiorradial</li>
+    <li>Extensor radial longo do carpo</li>
+    <li>Extensor radial curto do carpo</li>
+    <li>Extensor ulnar do carpo</li>
+    <li>Extensor dos dedos</li>
+    <li>Extensor do dedo mínimo</li>
+    <li>Abdutor longo do polegar</li>
+    <li>Extensor curto do polegar</li>
+    <li>Extensor longo do polegar</li>
+    <li>Extensor do indicador</li>
+    <li>Palmar curto</li>
+  </ol>
+
+  <h3>Músculos da mão</h3>
+  <ol>
+    <li>Abdutor do dedo mínimo</li>
+    <li>Flexor curto do dedo mínimo</li>
+    <li>Oponente do dedo mínimo</li>
+    <li>Abdutor curto do polegar</li>
+    <li>Flexor curto do polegar</li>
+    <li>Oponente do polegar</li>
+    <li>Adutor do polegar</li>
+    <li>Lumbricais</li>
+    <li>Interósseos dorsais</li>
+    <li>Interósseos palmares</li>
+  </ol>
+
+  <div class="upload">
+    <button onclick="tirarFoto('membroSuperior')">Tirar foto</button>
+    <input type="file" accept="image/*" multiple onchange="importarArquivo(event,'membroSuperior')">
+    <div id="galeria-membroSuperior"></div>
+  </div>
+</div>
+
+<!-- MEMBRO INFERIOR -->
+<div id="membroInferior" class="tab" style="display:none;">
+  <h2>Músculos do Membro Inferior</h2>
+
+  <h3>Músculos anteriores do quadril e da coxa</h3>
+  <ol>
+    <li>Íliopsoas</li>
+    <li>Ilíaco</li>
+    <li>Psoas maior</li>
+    <li>Psoas menor*</li>
+    <li>Pectíneo</li>
+    <li>Sartório</li>
+    <li>Quadríceps femoral - Reto femoral</li>
+    <li>Quadríceps femoral - Vasto lateral</li>
+    <li>Quadríceps femoral - Vasto medial</li>
+    <li>Quadríceps femoral - Vasto intermédio</li>
+  </ol>
+
+  <h3>Músculos mediais da coxa</h3>
+  <ol>
+    <li>Adutor longo</li>
+    <li>Adutor curto</li>
+    <li>Adutor magno</li>
+    <li>Grácil</li>
+  </ol>
+
+  <h3>Músculos anteriores da perna</h3>
+  <ol>
+    <li>Tibial anterior</li>
+    <li>Extensor longo dos dedos</li>
+    <li>Fibular terceiro</li>
+    <li>Extensor longo do hálux</li>
+  </ol>
+
+  <h3>Músculos laterais da perna</h3>
+  <ol>
+    <li>Fibular longo</li>
+    <li>Fibular curto</li>
+  </ol>
+
+  <h3>Músculos posteriores do quadril e da coxa</h3>
+  <ol>
+    <li>Tensor da fáscia lata</li>
+    <li>Glúteo máximo</li>
+    <li>Glúteo médio</li>
+    <li>Glúteo mínimo</li>
+    <li>Piriforme</li>
+    <li>Gêmeo superior</li>
+    <li>Obturador interno</li>
+    <li>Gêmeo inferior</li>
+    <li>Quadrado femoral</li>
+    <li>Bíceps femoral - Cabeça longa</li>
+    <li>Bíceps femoral - Cabeça curta</li>
+    <li>Semitendíneo</li>
+    <li>Semimembranáceo</li>
+  </ol>
+
+  <h3>Músculos posteriores da perna</h3>
+  <ol>
+    <li>Tríceps sural</li>
+    <li>Gastrocnêmio - cabeça medial</li>
+    <li>Gastrocnêmio - cabeça lateral</li>
+    <li>Sóleo</li>
+    <li>Tendão do calcâneo</li>
+    <li>Plantar</li>
+    <li>Poplíteo</li>
+    <li>Flexor longo do hálux</li>
+    <li>Tibial posterior</li>
+    <li>Flexor longo dos dedos</li>
+  </ol>
+
+  <h3>Músculos do pé</h3>
+  <ol>
+    <li>Extensor curto dos dedos</li>
+    <li>Extensor curto do hálux</li>
+    <li>Aponeurose plantar</li>
+    <li>Flexor curto dos dedos</li>
+    <li>Abdutor do hálux</li>
+    <li>Abdutor do dedo mínimo</li>
+    <li>Quadrado plantar</li>
+    <li>Tendões do m. flexor longo dos dedos</li>
+    <li>Lumbricais</li>
+    <li>Flexor curto do hálux - Cabeça medial</li>
+    <li>Tendão do flexor longo do hálux</li>
+    <li>Flexor curto do hálux - Cabeça lateral</li>
+    <li>Adutor do hálux - Cabeça oblíqua</li>
+    <li>Adutor do hálux - Cabeça transversa*</li>
+    <li>Flexor curto do dedo mínimo</li>
+    <li>Oponente do dedo mínimo</li>
+    <li>Interósseos dorsais</li>
+    <li>Interósseos plantares</li>
+  </ol>
+
+  <div class="upload">
+    <button onclick="tirarFoto('membroInferior')">Tirar foto</button>
+    <input type="file" accept="image/*" multiple onchange="importarArquivo(event,'membroInferior')">
+    <div id="galeria-membroInferior"></div>
+  </div>
+</div>
+
+<!-- MODELO 3D -->
+<div id="modelo3d" class="tab" style="display:none;">
+  <h2>Construção de material 3D</h2>
+
+  <p>
+    1. Tire fotos ao redor do modelo anatômico.<br>
+    2. Utilize entre <b>20 e 60 fotos</b>.<br>
+    3. As fotos devem cobrir <b>360° da estrutura</b>.<br>
+    4. Mantenha boa iluminação e evite sombras fortes.<br>
+    5. Fotografe sempre com foco e com pequena sobreposição entre as imagens.<br>
+    6. Depois, organize as fotos para uso em softwares de reconstrução 3D.
+  </p>
+
+  <input type="file" accept="image/*" multiple id="fotos3d">
+  <button onclick="gerarModelo()">Organizar fotos para 3D</button>
+  <div id="preview3d"></div>
+</div>
+
+<footer>
+  Responsável tecnológica: Profª Dra Cláudia Pinheiro
+</footer>
+
+<script src="js/app.js"></script>
+<script src="js/camera.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/pwa-install.js"></script>
+
+</body>
+</html>"Levantador da escápula",
 "Romboide maior",
 "Romboide menor",
 "Serrátil posterior superior",
