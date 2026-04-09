@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="PWA de Anatomia Humana - Miologia com roteiro prático, fotos, anotações, PDF e organização para material 3D.">
+  <title>Atlas de Miologia</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">M</div>
+        <div>
+          <h1>Atlas de Miologia</h1>
+          <p>ANATOMIA HUMANA — MIOLOGIA</p>
+        </div>
+      </div>
+
+      <div class="author-card">
+        <strong>Profª Drª Carmem Patrícia Barbosa</strong>
+        <span>Roteiro prático - Anatomia Humana</span>
+      </div>
+
+      <div class="install-card">
+        <button id="installBtn" class="primary-btn" hidden>Baixar app</button>
+        <div class="install-help">
+          <h2>Como instalar</h2>
+          <p><strong>Android:</strong> abra no Chrome e toque em <em>Instalar app</em> ou <em>Adicionar à tela inicial</em>.</p>
+          <p><strong>iPhone:</strong> abra no Safari, toque em <em>Compartilhar</em> e depois em <em>Adicionar à Tela de Início</em>.</p>
+        </div>
+      </div>
+
+      <div class="progress-card">
+        <div class="progress-top">
+          <h2>Progresso</h2>
+          <span id="progressText">0 / 0 marcados</span>
+        </div>
+        <div class="progress-bar"><span id="progressFill"></span></div>
+      </div>
+
+      <div class="student-card">
+        <label>Aluno
+          <input id="studentName" type="text" placeholder="Nome do aluno">
+        </label>
+        <label>Turma
+          <input id="studentClass" type="text" placeholder="Turma">
+        </label>
+      </div>
+
+      <nav id="tabNav" class="tab-nav"></nav>
+    </aside>
+
+    <main class="main-content">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Aplicativo PWA responsivo e offline</p>
+          <h2>Roteiro fiel ao anexo, com fotos, anotações, PDF e organização por regiões.</h2>
+          <p class="hero-note">Os nomes e a ordem do conteúdo foram mantidos conforme o roteiro enviado, inclusive quando o documento apresenta subitens e numeração repetida.</p>
+        </div>
+        <div class="hero-actions">
+          <button id="printPdfBtn" class="primary-btn">Gerar PDF de todos os músculos com foto</button>
+          <button id="expandAllBtn" class="ghost-btn">Expandir tudo</button>
+          <button id="collapseAllBtn" class="ghost-btn">Recolher tudo</button>
+        </div>
+      </section>
+
+      <section class="search-panel">
+        <label for="searchInput">Buscar no roteiro</label>
+        <input id="searchInput" type="search" placeholder="Ex.: trapézio, bíceps, diafragma">
+      </section>
+
+      <section class="body-map-card">
+        <div class="map-copy">
+          <h3>Mapa corporal por região</h3>
+          <p>Toque em uma região para abrir a aba correspondente.</p>
+        </div>
+        <div class="map-grid">
+          <button class="map-hotspot" data-target="dorso">Dorso</button>
+          <button class="map-hotspot" data-target="torax">Tórax</button>
+          <button class="map-hotspot" data-target="abdome">Abdome</button>
+          <button class="map-hotspot" data-target="membro-superior">Membro superior</button>
+          <button class="map-hotspot" data-target="membro-inferior">Membro inferior</button>
+          <button class="map-hotspot" data-target="generalidades">Generalidades</button>
+        </div>
+        <img src="assets/images/mapa-corporal.png" alt="Mapa corporal esquemático por regiões">
+      </section>
+
+      <section id="contentRoot" class="content-root"></section>
+
+      <section class="card three-d-card">
+        <div class="section-head">
+          <div>
+            <h3>Criar seu material 3D</h3>
+            <p>Esta seção organiza as imagens para reconstrução 3D a partir das fotos importadas. Ela não cria o modelo 3D diretamente no navegador.</p>
+          </div>
+        </div>
+
+        <div class="three-d-grid">
+          <div class="three-d-instructions">
+            <h4>Orientações</h4>
+            <ol>
+              <li>Fotografar o modelo em 360°.</li>
+              <li>Manter distância e iluminação constantes.</li>
+              <li>Usar várias fotos do mesmo material, cobrindo todos os lados visíveis.</li>
+              <li>Importar as imagens nesta seção.</li>
+              <li>Exportar as fotos organizadas ao final.</li>
+            </ol>
+          </div>
+
+          <div class="three-d-upload">
+            <label class="file-btn">
+              Importar imagens
+              <input id="threeDInput" type="file" accept="image/*" multiple>
+            </label>
+            <button id="exportThreeDBtn" class="ghost-btn">Exportar lista do material 3D</button>
+            <div id="threeDCount" class="count-box">0 imagens importadas</div>
+          </div>
+        </div>
+
+        <div id="threeDGallery" class="photo-grid"></div>
+      </section>
+
+      <footer class="footer">
+        <span>Responsável tecnológica: Profª Dra Cláudia Pinheiro</span>
+      </footer>
+    </main>
+  </div>
+
+  <template id="muscleCardTemplate">
+    <article class="muscle-card">
+      <div class="muscle-top">
+        <div>
+          <h4 class="muscle-title"></h4>
+        </div>
+        <label class="check-chip">
+          <input type="checkbox" class="study-check">
+          <span>Estudado</span>
+        </label>
+      </div>
+
+      <div class="muscle-actions">
+        <button class="camera-btn">Tirar foto</button>
+        <label class="file-btn">
+          Importar arquivo
+          <input type="file" accept="image/*" multiple class="import-input">
+        </label>
+      </div>
+
+      <label class="note-label">Anotações
+        <textarea class="muscle-note" rows="3" placeholder="Registrar observações do laboratório"></textarea>
+      </label>
+
+      <div class="photo-grid muscle-photos"></div>
+    </article>
+  </template>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/camera.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/install.js"></script>
+  <script src="js/three-d.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
